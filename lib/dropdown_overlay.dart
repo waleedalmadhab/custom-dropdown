@@ -22,6 +22,9 @@ class _DropdownOverlay extends StatefulWidget {
   final bool? excludeSelected;
   final bool? canCloseOutsideBounds;
   final _SearchType? searchType;
+  final Color? searchColor;
+  final String? searchHint;
+  final TextStyle? hintStyle;
 
   const _DropdownOverlay({
     Key? key,
@@ -36,6 +39,9 @@ class _DropdownOverlay extends StatefulWidget {
     this.excludeSelected,
     this.canCloseOutsideBounds,
     this.searchType,
+    this.searchHint='search',this.searchColor=Colors.grey,
+
+    this.hintStyle
   }) : super(key: key);
 
   @override
@@ -54,7 +60,7 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       final render1 = key1.currentContext?.findRenderObject() as RenderBox;
       final render2 = key2.currentContext?.findRenderObject() as RenderBox;
       final screenHeight = MediaQuery.of(context).size.height;
@@ -95,7 +101,7 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
       displayOverlayBottom
           ? Icons.keyboard_arrow_up_rounded
           : Icons.keyboard_arrow_down_rounded,
-      color: Colors.black,
+      color: widget.searchColor!,
       size: 20,
     );
 
@@ -180,17 +186,8 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
                             return true;
                           },
                           child: Theme(
-                            data: Theme.of(context).copyWith(
-                              scrollbarTheme: ScrollbarThemeData(
-                                thumbVisibility: MaterialStateProperty.all(
-                                  true,
-                                ),
-                                thickness: MaterialStateProperty.all(5),
-                                radius: const Radius.circular(4),
-                                thumbColor: MaterialStateProperty.all(
-                                  Colors.grey[300],
-                                ),
-                              ),
+                            data: ThemeData(
+
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,6 +215,9 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
                                 if (onListDataSearch)
                                   _SearchField(
                                     items: filteredItems,
+                                    searchHint: widget.searchHint,
+                                    searchColor: widget.searchColor,
+                                    hintStyle: widget.hintStyle,
                                     onSearchedItems: (val) {
                                       setState(() => items = val);
                                     },
@@ -313,11 +313,17 @@ class _ItemsList extends StatelessWidget {
 
 class _SearchField extends StatefulWidget {
   final List<String> items;
+  final String? searchHint;
+  final Color? searchColor;
+ final TextStyle? hintStyle;
   final ValueChanged<List<String>> onSearchedItems;
   const _SearchField({
     Key? key,
     required this.items,
     required this.onSearchedItems,
+    this.searchHint='search',
+    this.searchColor=Colors.grey,
+    this.hintStyle
   }) : super(key: key);
 
   @override
@@ -354,36 +360,47 @@ class _SearchFieldState extends State<_SearchField> {
       child: TextField(
         controller: searchCtrl,
         onChanged: onSearch,
+        style: widget.hintStyle !=null ?widget.hintStyle:TextStyle(),
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.grey[50],
+
+          fillColor: widget.searchColor!.withOpacity(.1),
+
           constraints: const BoxConstraints.tightFor(height: 40),
+
           contentPadding: const EdgeInsets.all(8),
-          hintText: 'Search',
-          hintStyle: const TextStyle(color: Colors.grey),
-          prefixIcon: const Icon(Icons.search, color: Colors.grey, size: 22),
+
+          hintText: widget.searchHint,
+
+          hintStyle:  widget.hintStyle !=null ?widget.hintStyle:TextStyle(),
+
+          prefixIcon:  Icon(Icons.search, color:widget.searchColor!, size: 22),
+
           suffixIcon: GestureDetector(
             onTap: onClear,
-            child: const Icon(Icons.close, color: Colors.grey, size: 20),
+            child:  Icon(Icons.close, color: widget.searchColor!, size: 20),
           ),
+
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: Colors.grey.withOpacity(.25),
+              color: widget.searchColor!.withOpacity(.25),
               width: 1,
             ),
           ),
+
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: Colors.grey.withOpacity(.25),
+              color: widget.searchColor!.withOpacity(.25),
               width: 1,
             ),
           ),
+
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: Colors.grey.withOpacity(.25),
+              color: widget.searchColor!.withOpacity(.25),
               width: 1,
             ),
           ),

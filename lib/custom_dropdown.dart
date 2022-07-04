@@ -11,6 +11,13 @@ part 'overlay_builder.dart';
 
 enum _SearchType { onListData }
 
+class Item{
+  int id;
+  String name,code='';
+  Item({required this.id,required this.name,this.code=''});
+
+}
+
 class CustomDropdown extends StatefulWidget {
   final List<String> items;
   final TextEditingController controller;
@@ -29,6 +36,8 @@ class CustomDropdown extends StatefulWidget {
   final Color? fillColor;
   final bool? canCloseOutsideBounds;
   final _SearchType? searchType;
+  final String? searchHint;
+  final Color? searchColor;
 
   CustomDropdown({
     Key? key,
@@ -47,6 +56,10 @@ class CustomDropdown extends StatefulWidget {
     this.onChanged,
     this.excludeSelected = true,
     this.fillColor = Colors.white,
+    this.searchColor=Colors.grey,
+    this.searchHint='search',
+
+
   })  : assert(items.isNotEmpty, 'Items list must contain at least one item.'),
         assert(
           controller.text.isEmpty || items.contains(controller.text),
@@ -74,6 +87,10 @@ class CustomDropdown extends StatefulWidget {
     this.excludeSelected = true,
     this.canCloseOutsideBounds = true,
     this.fillColor = Colors.white,
+    this.searchColor=Colors.grey,
+    this.searchHint='search',
+
+
   })  : assert(items.isNotEmpty, 'Items list must contain at least one item.'),
         assert(
           controller.text.isEmpty || items.contains(controller.text),
@@ -122,6 +139,9 @@ class _CustomDropdownState extends State<CustomDropdown> {
           excludeSelected: widget.excludeSelected,
           canCloseOutsideBounds: widget.canCloseOutsideBounds,
           searchType: widget.searchType,
+          searchColor: widget.searchColor,
+          searchHint: widget.searchHint,
+          hintStyle: widget.hintStyle,
         );
       },
       child: (showCallback) {

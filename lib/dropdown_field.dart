@@ -5,7 +5,7 @@ const _textFieldIcon = Icon(
   color: Colors.black,
   size: 20,
 );
-const _contentPadding = EdgeInsets.only(left: 16);
+const _contentPadding = EdgeInsets.only(left: 16,right: 16);
 const _noTextStyle = TextStyle(height: 0);
 const _borderSide = BorderSide(color: Colors.transparent);
 const _errorBorderSide = BorderSide(color: Colors.redAccent, width: 2);
@@ -106,6 +106,7 @@ class _DropDownFieldState extends State<_DropDownField> {
       onTap: widget.onTap,
       onChanged: widget.onChanged,
       style: widget.style,
+
       decoration: InputDecoration(
         isDense: true,
         contentPadding: _contentPadding,
@@ -113,6 +114,7 @@ class _DropDownFieldState extends State<_DropDownField> {
         hintText: widget.hintText,
         hintStyle: widget.hintStyle,
         fillColor: widget.fillColor,
+
         filled: true,
         errorStyle: widget.errorText != null ? widget.errorStyle : _noTextStyle,
         border: border,
