@@ -14,12 +14,12 @@ enum _SearchType { onListData }
 class Item{
   int id;
   String name,code='';
-  Item({required this.id,required this.name,this.code=''});
+  Item({ this.id=1,required this.name,this.code=''});
 
 }
 
 class CustomDropdown extends StatefulWidget {
-  final List<String> items;
+  final List<Item> items;
   final TextEditingController controller;
   final String? hintText;
   final TextStyle? hintStyle;

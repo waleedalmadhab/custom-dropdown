@@ -11,7 +11,7 @@ const _overlayShadowOffset = Offset(0, 6);
 const _listItemPadding = EdgeInsets.symmetric(vertical: 12, horizontal: 16);
 
 class _DropdownOverlay extends StatefulWidget {
-  final List<String> items;
+  final List<Item> items;
   final TextEditingController controller;
   final Size size;
   final LayerLink layerLink;
@@ -52,8 +52,8 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
   bool displayOverly = true;
   bool displayOverlayBottom = true;
   late String headerText;
-  late List<String> items;
-  late List<String> filteredItems;
+  late List<Item> items;
+  late List<Item> filteredItems;
   final key1 = GlobalKey(), key2 = GlobalKey();
   final scrollController = ScrollController();
 
@@ -123,8 +123,8 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
             headerText: headerText,
             itemTextStyle: widget.listItemStyle,
             onItemSelect: (value) {
-              if (headerText != value) {
-                widget.controller.text = value;
+              if (headerText != value.name) {
+                widget.controller.text = value.name;
               }
               setState(() => displayOverly = false);
             },
@@ -254,10 +254,10 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
 
 class _ItemsList extends StatelessWidget {
   final ScrollController scrollController;
-  final List<String> items;
+  final List<Item> items;
   final bool excludeSelected;
   final String headerText;
-  final ValueSetter<String> onItemSelect;
+  final ValueSetter<Item> onItemSelect;
   final EdgeInsets padding;
   final TextStyle? itemTextStyle;
 
@@ -297,7 +297,7 @@ class _ItemsList extends StatelessWidget {
                 color: selected ? Colors.grey[100] : Colors.transparent,
                 padding: _listItemPadding,
                 child: Text(
-                  items[index],
+                  items[index].name,
                   style: listItemStyle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -312,11 +312,11 @@ class _ItemsList extends StatelessWidget {
 }
 
 class _SearchField extends StatefulWidget {
-  final List<String> items;
+  final List<Item> items;
   final String? searchHint;
   final Color? searchColor;
  final TextStyle? hintStyle;
-  final ValueChanged<List<String>> onSearchedItems;
+  final ValueChanged<List<Item>> onSearchedItems;
   const _SearchField({
     Key? key,
     required this.items,
@@ -341,7 +341,7 @@ class _SearchFieldState extends State<_SearchField> {
 
   void onSearch(String str) {
     final result = widget.items
-        .where((item) => item.toLowerCase().contains(str.toLowerCase()))
+        .where((item) => item.name.toLowerCase().contains(str.toLowerCase()))
         .toList();
     widget.onSearchedItems(result);
   }
