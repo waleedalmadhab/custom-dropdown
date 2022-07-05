@@ -14,6 +14,8 @@ class _DropDownField extends StatefulWidget {
   final TextEditingController controller;
   final VoidCallback onTap;
   final Function(String)? onChanged;
+  final Function(Item)? onItemSelect;
+
   final String? hintText;
   final TextStyle? hintStyle;
   final TextStyle? style;
@@ -30,6 +32,7 @@ class _DropDownField extends StatefulWidget {
     required this.controller,
     required this.onTap,
     this.onChanged,
+    this.onItemSelect,
     this.suffixIcon,
     this.hintText,
     this.hintStyle,

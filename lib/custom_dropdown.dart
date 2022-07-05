@@ -32,6 +32,7 @@ class CustomDropdown extends StatefulWidget {
   final BorderRadius? borderRadius;
   final Widget? fieldSuffixIcon;
   final Function(String)? onChanged;
+  final Function(Item) onItemSelect;
   final bool? excludeSelected;
   final Color? fillColor;
   final bool? canCloseOutsideBounds;
@@ -43,6 +44,8 @@ class CustomDropdown extends StatefulWidget {
     Key? key,
     required this.items,
     required this.controller,
+    required     this.onItemSelect,
+
     this.hintText,
     this.hintStyle,
     this.selectedStyle,
@@ -73,6 +76,8 @@ class CustomDropdown extends StatefulWidget {
     Key? key,
     required this.items,
     required this.controller,
+   required this.onItemSelect,
+
     this.hintText,
     this.hintStyle,
     this.selectedStyle,
@@ -137,6 +142,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
           hintText: hintText,
           listItemStyle: widget.listItemStyle,
           excludeSelected: widget.excludeSelected,
+          onItemSelect: widget.onItemSelect,
           canCloseOutsideBounds: widget.canCloseOutsideBounds,
           searchType: widget.searchType,
           searchColor: widget.searchColor,
@@ -160,6 +166,9 @@ class _CustomDropdownState extends State<CustomDropdown> {
             hintText: hintText,
             suffixIcon: widget.fieldSuffixIcon,
             onChanged: widget.onChanged,
+            onItemSelect: widget.onItemSelect,
+
+
             fillColor: widget.fillColor,
           ),
         );

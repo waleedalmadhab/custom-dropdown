@@ -12,6 +12,7 @@ const _listItemPadding = EdgeInsets.symmetric(vertical: 12, horizontal: 16);
 
 class _DropdownOverlay extends StatefulWidget {
   final List<Item> items;
+
   final TextEditingController controller;
   final Size size;
   final LayerLink layerLink;
@@ -25,6 +26,8 @@ class _DropdownOverlay extends StatefulWidget {
   final Color? searchColor;
   final String? searchHint;
   final TextStyle? hintStyle;
+  final Function(Item)? onItemSelect;
+
 
   const _DropdownOverlay({
     Key? key,
@@ -35,6 +38,7 @@ class _DropdownOverlay extends StatefulWidget {
     required this.hideOverlay,
     required this.hintText,
     this.headerStyle,
+    this.onItemSelect,
     this.listItemStyle,
     this.excludeSelected,
     this.canCloseOutsideBounds,
@@ -123,6 +127,7 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
             headerText: headerText,
             itemTextStyle: widget.listItemStyle,
             onItemSelect: (value) {
+              widget.onItemSelect!(value);
               if (headerText != value.name) {
                 widget.controller.text = value.name;
               }
