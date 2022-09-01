@@ -63,11 +63,13 @@ class CustomDropdown extends StatefulWidget {
     this.searchHint='search',
 
 
-  })  : assert(items.isNotEmpty, 'Items list must contain at least one item.'),
-        assert(
-          controller.text.isEmpty || items.contains(controller.text),
-          'Controller value must match with one of the item in items list.',
-        ),
+  })
+      :
+        // assert(items.isNotEmpty, 'Items list must contain at least one item.'),
+        // assert(
+        //   controller.text.isEmpty || items.contains(controller.text),
+        //   'Controller value must match with one of the item in items list.',
+        // ),
         searchType = null,
         canCloseOutsideBounds = true,
         super(key: key);

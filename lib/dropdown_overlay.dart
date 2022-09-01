@@ -338,8 +338,20 @@ class _SearchField extends StatefulWidget {
 class _SearchFieldState extends State<_SearchField> {
   final searchCtrl = TextEditingController();
 
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+   // WidgetsBinding.instance?.addPostFrameCallback((_) =>FocusScope.of(context).requestFocus(_focusNode));
+
+    FocusManager.instance.primaryFocus?.requestFocus(_focusNode);
+
+  }
+
   @override
   void dispose() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     searchCtrl.dispose();
     super.dispose();
   }
@@ -360,11 +372,15 @@ class _SearchFieldState extends State<_SearchField> {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextField(
         controller: searchCtrl,
         onChanged: onSearch,
+        autofocus: true,
+        scrollPadding: EdgeInsets.only(bottom:300),
+        focusNode: _focusNode,
         style: widget.hintStyle !=null ?widget.hintStyle:TextStyle(),
         decoration: InputDecoration(
           filled: true,
